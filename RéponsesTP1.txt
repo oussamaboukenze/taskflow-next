@@ -1,0 +1,49 @@
+ Q1 : Comparez la structure de votre projet React (Vite) avec Next.js. Quelles différences ?
+ Dans React(Vite) on utilise le dossier src et le routing dans le code, mais Next.js, on a une structure dans le dossier app, le routing est automatique avec les dossiers.
+
+ Q2 : Combien de fichiers avez-vous créé pour cette route ? Comparez avec React Router où il faut : le composant + la Route dans App.tsx + l’import.
+ Next.js on un un seul fichier(page.tsx), mais React on a composant + route + import
+
+ Q3 : En React, on utilisait useParams() pour récupérer l’id. En Next.js, comment est-il
+ récupéré ? Quelle différence fondamentale ?
+ React useParams() coté client, Next.js params envoyé par le server
+
+ Q5 : En React SPA, combien de lignes fallait-il pour charger les projets ? (useState +
+ useEffect + fetch + .then + setProjects + loading). Combien ici ?
+ plusieurs lignes pour charger les projets,mais Next.js peu de ligne juste dans fetch
+
+  Q6 : Ouvrez F12 > Network. Voyez-vous la requête GET /projects ? Pourquoi ?
+  Non, on ne voit pas la requête dans Network car elle est faite par le serveur, pas le navigateur
+
+   Q7 : Pourquoi faut-il 'use client' ici et pas dans la page Dashboard ?
+    Login a besoin de useState
+
+   Q8 : En React, on utilisait useNavigate() de react-router-dom. En Next.js, quel est
+    l’équivalent ?
+    Next.js utilise useRouter()
+
+    Q9 : Que voyez-vous dans le code source HTML ? Y a-t-il les noms des projets ?
+    React HTML vide (juste div root)
+
+    Q10 : Que voyez-vous cette fois ? Les noms des projets sont-ils dans le HTML ?
+    Next.js HTML contient déjà les projets
+
+     Q11 : Le Header dans layout.tsx ne se re-monte pas quand on navigue. En React Router,
+    comment faisait-on pour obtenir ce comportement ?
+    React on mettait le Header dans App.tsx (layout manuel)
+
+    Q12 : En Next.js, si je veux un layout spécifique au Dashboard (avec Sidebar), où est-ce
+    que je crée le fichier ?
+    Dans app/dashboard/layout.tsx
+
+    Q13 : Le Dashboard est un Server Component. Peut-il utiliser onClick ? Pourquoi ?
+    Non Server Component ne supporte pas onClick (pas d’interactivité)
+
+    Q14 : Si je veux ajouter un bouton « + Nouveau projet » sur le Dashboard, dois-je
+    transformer TOUTE la page en Client Component ?
+    Non on peut créer un petit composant client seulement pour le bouton
+
+    Q15 : json-server tourne sur :4000. Le fetch dans le Server Component se fait depuis le
+    SERVEUR Next.js. Le navigateur ne voit jamais l’URL :4000. Quel avantage de sécurité cela
+    apporte ?
+    Le navigateur ne voit pas l’API
