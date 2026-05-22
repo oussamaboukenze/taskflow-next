@@ -1,43 +1,27 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import LogoutButton from './components/LogoutButton';
+import { getSession } from './lib/session';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'TaskFlow',
   description: 'Gestion de projets collaboratifs',
 };
 
-interface Session {
-  email: string;
-  name: string;
-  role: string;
-}
-
-function parseSession(value: string | undefined) {
-  if (!value) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(value) as Session;
-  } catch {
-    return null;
-  }
-}
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const user = parseSession(cookieStore.get('session')?.value);
+  const user = await getSession();
 
   return (
     <html lang="fr">
-      <body>
+      <body className={inter.className}>
         <header
           style={{
             background: '#1B8C3E',

@@ -1,0 +1,40 @@
+Q1 : Oui, Prisma Studio doit afficher les donnees seed dans Project et User apres execution du seed.
+
+Q2 : La version Prisma est plus courte et surtout plus claire : plus besoin de lire le fichier JSON, parser, push, puis reecrire le fichier.
+
+Q3 : Oui, l'app doit continuer a fonctionner sans db.json, car les routes, les Server Actions et le Dashboard lisent maintenant SQLite via Prisma.
+
+Q4 : Un Server Component s'execute sur le serveur, donc il peut acceder a Prisma et a la base. Un Client Component s'execute dans le navigateur : il ne peut pas embarquer Prisma ni acceder directement a SQLite.
+
+Q5 : Avec next/font, il ne doit pas y avoir de requete externe pour la police. Next telecharge et sert la police localement.
+
+Q6 : Les pages retournees par generateStaticParams sont generees au build.
+
+Q7 : Un nouveau projet cree apres le build peut etre genere a la demande, mais il ne fait pas partie des pages deja pre-generees au build.
+
+Q8 : A completer avec l'URL Vercel apres deploiement.
+
+Q9 :
+React SPA (Vite)
+Routing : cote client avec React Router.
+Data fetching : fetch/axios vers une API.
+Mutations (CRUD) : appels HTTP vers un backend.
+Auth : souvent geree via backend separe et stockage navigateur/cookies.
+Base de donnees : via API Express ou autre backend.
+Deploiement : frontend + backend separes.
+SEO : plus limite sans SSR.
+Performance : tres bonne apres chargement, mais bundle client plus important.
+Nombre de projets : un projet frontend + souvent un projet backend.
+
+Next.js Full-Stack
+Routing : file-based routing dans app/.
+Data fetching : Server Components, API Routes ou Server Actions.
+Mutations (CRUD) : Server Actions et routes API.
+Auth : cookies serveur.
+Base de donnees : Prisma cote serveur.
+Deploiement : un seul projet sur Vercel.
+SEO : meilleur grace au rendu serveur et a la generation statique.
+Performance : optimisations integrees avec next/image, next/font, SSG et streaming.
+Nombre de projets : un seul projet full-stack.
+
+Q10 : Pour une startup, Next.js full-stack est souvent un meilleur choix au depart : moins de projets a maintenir, SEO plus simple, backend integre, deploiement rapide et bonnes performances par defaut. React SPA + Express reste utile si l'architecture exige une API separee ou plusieurs clients.

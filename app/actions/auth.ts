@@ -36,6 +36,7 @@ export async function login(
   );
 
   redirect('/dashboard');
+  return null;
 }
 
 export async function logoutAction() {

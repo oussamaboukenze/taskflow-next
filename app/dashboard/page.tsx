@@ -1,20 +1,14 @@
 import Link from 'next/link';
 import { deleteProject, renameProject } from '../actions/projects';
-import { getBaseUrl } from '../lib/url';
 import AddProjectForm from './AddProjectForm';
-
-interface Project {
-  id: string;
-  name: string;
-  color: string;
-}
+import { prisma } from '@/lib/prisma';
+import { requireSession } from '../lib/session';
 
 export default async function DashboardPage() {
-  const baseUrl = await getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/projects`, {
-    cache: 'no-store',
+  await requireSession();
+  const projects = await prisma.project.findMany({
+    orderBy: { createdAt: 'desc' },
   });
-  const projects = (await res.json()) as Project[];
 
   return (
     <div style={{ padding: '2rem' }}>

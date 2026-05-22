@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { readDB, writeDB } from './db';
+import { prisma } from '@/lib/prisma';
 
 interface ProjectBody {
   name?: string;
@@ -7,8 +7,11 @@ interface ProjectBody {
 }
 
 export async function GET() {
-  const db = readDB();
-  return NextResponse.json(db.projects);
+  const projects = await prisma.project.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return NextResponse.json(projects);
 }
 
 export async function POST(request: Request) {
@@ -20,15 +23,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Nom requis' }, { status: 400 });
   }
 
-  const db = readDB();
-  const newProject = {
-    id: String(Date.now()),
-    name,
-    color,
-  };
-
-  db.projects.push(newProject);
-  writeDB(db);
+  const newProject = await prisma.project.create({
+    data: { name, color },
+  });
 
   return NextResponse.json(newProject, { status: 201 });
 }

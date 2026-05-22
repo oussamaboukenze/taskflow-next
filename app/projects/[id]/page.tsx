@@ -1,10 +1,12 @@
 import Link from 'next/link';
-import { getBaseUrl } from '../../lib/url';
+import { notFound } from 'next/navigation';
+import { prisma } from '@/lib/prisma';
+import { requireSession } from '../../lib/session';
 
-interface Project {
-  id: string;
-  name: string;
-  color: string;
+export async function generateStaticParams() {
+  const projects = await prisma.project.findMany();
+
+  return projects.map((project) => ({ id: String(project.id) }));
 }
 
 interface Props {
@@ -12,44 +14,16 @@ interface Props {
 }
 
 export default async function ProjectPage({ params }: Props) {
+  await requireSession();
   const { id } = await params;
-  const baseUrl = await getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/projects/${id}`, {
-    cache: 'no-store',
+  const project = await prisma.project.findUnique({
+    where: { id: Number(id) },
   });
 
-  if (!res.ok) {
-    return (
-      <div style={{ padding: '2rem', maxWidth: 480, margin: '0 auto' }}>
-        <div
-          style={{
-            background: '#fff3f3',
-            border: '1px solid #f5c6c6',
-            borderRadius: 8,
-            padding: '1.25rem 1.5rem',
-            color: '#b00020',
-          }}
-        >
-          <strong>Projet introuvable</strong>
-          <p style={{ margin: '0.5rem 0 0', fontSize: 14 }}>
-            Aucun projet trouve avec l&apos;ID {id}.
-          </p>
-        </div>
-        <Link
-          href="/dashboard"
-          style={{
-            display: 'inline-block',
-            marginTop: '1.5rem',
-            color: '#1B8C3E',
-          }}
-        >
-          Retour au Dashboard
-        </Link>
-      </div>
-    );
+  if (!project) {
+    notFound();
+    return null;
   }
-
-  const project = (await res.json()) as Project;
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -67,7 +41,7 @@ export default async function ProjectPage({ params }: Props) {
         />
         {project.name}
       </h1>
-      <p>ID : {project.id}</p>
+      <p>Cree le : {project.createdAt.toLocaleDateString('fr-FR')}</p>
       <Link href="/dashboard">Retour au Dashboard</Link>
     </div>
   );
